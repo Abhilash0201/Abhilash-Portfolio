@@ -15,7 +15,7 @@ import styles from '../styles/VideoIntro.module.css';
 const CinematicLayer = lazy(() => import('./CinematicLayer'));
 
 export default function VideoIntro() {
-  const basePath = '/ABHILASH';
+  const basePath = '';
   const heroRef = useRef<HTMLElement>(null);
   const mainVideoRef = useRef<HTMLVideoElement>(null);
   const ambientVideoRef = useRef<HTMLVideoElement>(null);
