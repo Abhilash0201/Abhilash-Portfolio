@@ -15,6 +15,7 @@ import styles from '../styles/VideoIntro.module.css';
 const CinematicLayer = lazy(() => import('./CinematicLayer'));
 
 export default function VideoIntro() {
+  const basePath = '/ABHILASH';
   const heroRef = useRef<HTMLElement>(null);
   const mainVideoRef = useRef<HTMLVideoElement>(null);
   const ambientVideoRef = useRef<HTMLVideoElement>(null);
@@ -194,7 +195,7 @@ export default function VideoIntro() {
         <video
           ref={ambientVideoRef}
           className={styles.ambientVideo}
-          src="/hero.mp4"
+          src={`${basePath}/hero.mp4`}
           autoPlay
           loop
           muted
@@ -399,7 +400,7 @@ export default function VideoIntro() {
                 <video
                   ref={backdropVideoRef}
                   className="w-full h-full object-cover scale-150 filter blur-[40px] opacity-70"
-                  src="/hero.mp4"
+                  src={`${basePath}/hero.mp4`}
                   autoPlay
                   loop
                   muted
@@ -412,7 +413,7 @@ export default function VideoIntro() {
                 <video
                   ref={haloVideoRef}
                   className="w-full h-full object-cover rounded-[28px] filter blur-[15px] opacity-50"
-                  src="/hero.mp4"
+                  src={`${basePath}/hero.mp4`}
                   autoPlay
                   loop
                   muted
@@ -425,7 +426,7 @@ export default function VideoIntro() {
                 <video
                   ref={mainVideoRef}
                   className={styles.centerpieceVideo}
-                  src="/hero.mp4"
+                  src={`${basePath}/hero.mp4`}
                   autoPlay
                   loop
                   muted
