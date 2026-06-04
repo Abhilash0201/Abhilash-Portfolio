@@ -97,6 +97,27 @@ export default function VideoIntro() {
     return () => window.removeEventListener('wheel', handleWheel);
   }, []);
 
+  // --- Touch gesture handling for mobile swipe ---
+  const touchStartY = useRef<number>(0);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    const touchEndY = e.changedTouches[0].clientY;
+    const diffY = touchStartY.current - touchEndY;
+    const swipeThreshold = 50;
+
+    if (Math.abs(diffY) > swipeThreshold) {
+      if (diffY > 0) {
+        setSlide((prev) => (prev < 4 ? prev + 1 : prev));
+      } else {
+        setSlide((prev) => (prev > 0 ? prev - 1 : prev));
+      }
+    }
+  }, []);
+
   // --- GSAP entrance animations ---
   useEffect(() => {
     if (!controlsRef.current || !scrollRef.current) return;
@@ -189,7 +210,13 @@ export default function VideoIntro() {
 
   return (
     <>
-      <section ref={heroRef} className={styles.hero} style={{ opacity: 0 }}>
+      <section
+        ref={heroRef}
+        className={styles.hero}
+        style={{ opacity: 0 }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
 
         {/* ── Ambient Blurred Background (Always active) ── */}
         <video

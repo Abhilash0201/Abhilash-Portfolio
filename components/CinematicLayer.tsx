@@ -273,15 +273,21 @@ export default function CinematicLayer({ soundActive, slide }: CinematicLayerPro
 
       // Mouse Parallax Camera Transitions
       // Slide transitions change target camera offset
+      const isMobile = window.innerWidth <= 1024;
       let targetCameraX = mouse.x * 1.5;
       let targetCameraY = mouse.y * 1.0;
-      let targetCameraZ = 6.8;
+      let targetCameraZ = isMobile ? 8.0 : 6.8;
 
-      if (slide === 1) {
-        // Zoom out and shift camera slightly to the right to frame the side dock video
-        targetCameraX = -2.8 + mouse.x * 0.8;
-        targetCameraY = 0.5 + mouse.y * 0.6;
-        targetCameraZ = 8.5;
+      if (slide !== 0) {
+        if (isMobile) {
+          targetCameraX = mouse.x * 0.6;
+          targetCameraY = 0.4 + mouse.y * 0.5;
+          targetCameraZ = 9.8;
+        } else {
+          targetCameraX = -2.8 + mouse.x * 0.8;
+          targetCameraY = 0.5 + mouse.y * 0.6;
+          targetCameraZ = 8.5;
+        }
       }
 
       // Smooth lerp camera translation
@@ -289,9 +295,9 @@ export default function CinematicLayer({ soundActive, slide }: CinematicLayerPro
       camera.position.y += (targetCameraY - camera.position.y) * 0.04;
       camera.position.z += (targetCameraZ - camera.position.z) * 0.04;
 
-      // Look at dynamic focal point (slightly left of center on slide 1)
+      // Look at dynamic focal point (slightly left of center on slide 1-4 for desktop)
       const targetLookAt = new THREE.Vector3(
-        slide === 1 ? -1.0 : 0,
+        (slide !== 0 && !isMobile) ? -1.0 : 0,
         0,
         0
       );
